@@ -211,7 +211,7 @@ function sendEmail(formData) {
     const encodedSubject = encodeURIComponent(subject);
 
     // Создаем ссылку mailto
-    const mailtoLink = `mailto:cdcult@bk.ru?subject=${encodedSubject}&body=${encodedBody}`;
+    const mailtoLink = `mailto:ilyokserg@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
 
     // Открываем почтовый клиент
     window.location.href = mailtoLink;
@@ -308,3 +308,4 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
