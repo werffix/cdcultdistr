@@ -169,7 +169,7 @@ document.getElementById('distributionForm').addEventListener('submit', function(
 function sendEmail(formData) {
     // URL вашего скрипта на Vercel (ЗАМЕНИТЬ НА ВАШ РЕАЛЬНЫЙ URL!)
     // Пример: https://your-project-name.vercel.app/api/telegram-webhook
-    const telegramWebhookUrl = 'https://YOUR_VERCEL_URL.vercel.app/api/telegram-webhook';
+    const telegramWebhookUrl = 'https://github.com/werffix/cdcultdistr/blob/main/telegram-webhook.js';
 
     fetch(telegramWebhookUrl, {
         method: 'POST',
@@ -280,3 +280,4 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
