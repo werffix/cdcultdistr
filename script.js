@@ -121,7 +121,7 @@ document.getElementById('addTrackBtn').addEventListener('click', addTrack);
 
 // Обработчик отправки формы
 document.getElementById('distributionForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+    e.preventDefault(); // Останавливаем стандартное поведение формы
     
     // Проверяем обязательные поля
     const requiredFields = document.querySelectorAll('[required]');
@@ -158,7 +158,7 @@ document.getElementById('distributionForm').addEventListener('submit', function(
             }
         }
 
-        // Отправляем данные (теперь через обновленную функцию sendEmail)
+        // Отправляем данные через обновленную функцию sendEmail
         sendEmail(data);
     } else {
         alert('Пожалуйста, заполните все обязательные поля.');
@@ -167,8 +167,8 @@ document.getElementById('distributionForm').addEventListener('submit', function(
 
 // Функция отправки данных через Formspree
 function sendEmail(formData) {
-    // URL вашего эндпоинта Formspree
-    const formspreeUrl = 'https://formspree.io/f/xeovjkbn'; // ← ВАША ССЫЛКА
+    // Ваш URL с Formspree
+    const formspreeUrl = 'https://formspree.io/f/xeovjkbn'; // <-- Ваш URL
 
     // Formspree ожидает обычный объект FormData, а не JSON.
     // Создадим новый FormData и добавим в него все поля.
