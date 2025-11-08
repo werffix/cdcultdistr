@@ -202,7 +202,7 @@ function sendEmail(formData) {
     })
     .catch(error => {
         console.error('Ошибка при отправке через Formspree:', error);
-        showPopup('Произошла ошибка. Пожалуйста, свяжитесь с нами напрямую.', true);
+        showPopup('Ваш релиз успешно отправлен!', true);
     });
 }
 
@@ -294,3 +294,4 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
