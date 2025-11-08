@@ -165,32 +165,60 @@ document.getElementById('distributionForm').addEventListener('submit', function(
     }
 });
 
-// Функция отправки данных в Telegram через Vercel API Route
+// Функция отправки данных через mailto (открывает почтовый клиент)
 function sendEmail(formData) {
-    // URL вашего скрипта на Vercel (ЗАМЕНИТЬ НА ВАШ РЕАЛЬНЫЙ URL!)
-    // Пример: https://your-project-name.vercel.app/api/telegram-webhook
-    const telegramWebhookUrl = 'https://app.cdcult.ru/telegram-webhook.js';
+    // Формируем текст письма
+    let subject = "Новая заявка на дистрибуцию";
+    let body = "📦 Новая заявка\n\n";
+    body += `Основные артист(-ы): ${formData.artists || 'Не указано'}\n`;
+    body += `Тип релиза: ${formData.releaseType || 'Не указано'}\n`;
+    body += `Название релиза: ${formData.releaseName || 'Не указано'}\n`;
+    body += `Подзаголовок: ${formData.subtitle || 'Не указано'}\n`;
+    body += `Перенос/заливка: ${formData.transfer || 'Не указано'}\n`;
+    if (formData.upc) body += `UPC: ${formData.upc}\n`;
+    if (formData.originalReleaseDate) body += `Оригинальная дата релиза: ${formData.originalReleaseDate}\n`;
+    body += `Жанр: ${formData.genre || 'Не указано'}\n`;
+    body += `Дата выхода: ${formData.releaseDate || 'Не указано'}\n`;
+    body += `ФИО автора текста: ${formData.lyricist || 'Не указано'}\n`;
+    body += `ФИО автора инструментала: ${formData.composer || 'Не указано'}\n`;
+    body += `Ненормативная лексика: ${formData.profanity || 'Не указано'}\n`;
+    body += `Ссылка на архив: ${formData.archiveLink || 'Не указана'}\n`;
+    body += `Spotify: ${formData.spotifyProfile || 'Не указано'}\n`;
+    if (formData.spotifyProfileUrl) body += `Spotify URL: ${formData.spotifyProfileUrl}\n`;
+    body += `Apple Music: ${formData.appleProfile || 'Не указано'}\n`;
+    if (formData.appleProfileUrl) body += `Apple Music URL: ${formData.appleProfileUrl}\n`;
+    body += `Telegram: ${formData.telegram || 'Не указано'}\n`;
+    body += `Комментарий: ${formData.comments || 'Не указано'}\n`;
 
-    fetch(telegramWebhookUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(response => {
-        if (response.ok) {
-            // Показываем всплывающее окно об успехе
-            showPopup('Ваш релиз успешно отправлен!', true);
-            resetForm(); // Сбрасываем форму
-        } else {
-            throw new Error('Ошибка сервера');
-        }
-    })
-    .catch(error => {
-        console.error('Ошибка при отправке в Telegram:', error);
-        showPopup('Произошла ошибка. Напишите нам в Telegram @cdcult_records', true);
-    });
+    // Добавляем информацию о треках (если есть)
+    if (formData['trackName[]'] && Array.isArray(formData['trackName[]'])) {
+      body += '\nТреки:\n';
+      for (let i = 0; i < formData['trackName[]'].length; i++) {
+        const trackNum = i + 1;
+        body += `\nТрек ${trackNum}:\n`;
+        body += `- Название: ${formData['trackName[]'][i] || 'Не указано'}\n`;
+        body += `- Версия: ${formData['trackVersion[]'] ? formData['trackVersion[]'][i] : 'Не указана'}\n`;
+        body += `- ISRC: ${formData['isrc[]'] ? formData['isrc[]'][i] : 'Не указан'}\n`;
+        body += `- Артист(ы): ${formData['trackArtist[]'] ? formData['trackArtist[]'][i] : 'Не указано'}\n`;
+        body += `- Автор инструментала: ${formData['trackComposer[]'] ? formData['trackComposer[]'][i] : 'Не указано'}\n`;
+        body += `- Автор текста: ${formData['trackLyricist[]'] ? formData['trackLyricist[]'][i] : 'Не указано'}\n`;
+        body += `- Лексика: ${formData[`trackProfanity${trackNum}`] || 'Не указана'}\n`;
+      }
+    }
+
+    // Кодировка для mailto
+    const encodedBody = encodeURIComponent(body);
+    const encodedSubject = encodeURIComponent(subject);
+
+    // Создаем ссылку mailto
+    const mailtoLink = `mailto:cdcult@bk.ru?subject=${encodedSubject}&body=${encodedBody}`;
+
+    // Открываем почтовый клиент
+    window.location.href = mailtoLink;
+
+    // Показываем всплывающее окно об успехе
+    showPopup('Ваш релиз успешно отправлен!', true);
+    resetForm(); // Сбрасываем форму
 }
 
 // Функция сброса формы
@@ -280,5 +308,3 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
-
-
