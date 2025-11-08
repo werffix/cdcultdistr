@@ -158,55 +158,39 @@ document.getElementById('distributionForm').addEventListener('submit', function(
             }
         }
 
-       // Функция отправки данных в Google Таблицу через Apps Script
-function sendEmail(formData) {
-    // ВАЖНО: ЗАМЕНИТЕ ЭТОТ URL НА СКОПИРОВАННЫЙ ИЗ ШАГА 2!
-    const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbytaiN_B_Qri2nxT8wLkwIq_2yGjw4fR1LM0cy0A4aTcoEk2Pot9AmAWifbIB10fN4/exec';
-
-    // Подготовим данные к отправке. FormData нужно преобразовать в объект.
-    const plainFormData = {};
-    for (let [key, value] of Object.entries(formData)) {
-        if (Array.isArray(value)) {
-            plainFormData[key] = value; // Оставляем как массив для треков
-        } else {
-            plainFormData[key] = value;
-        }
-    }
-
-    // Отправляем данные на Google Apps Script
-    fetch(googleScriptUrl, {
-        method: 'POST',
-        mode: 'no-cors', // Обход CORS - важно для внешнего запроса
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(plainFormData),
-    })
-    .then(response => {
-        // mode: 'no-cors' не позволяет получить детали ответа, но успешная отправка работает
-        // Обычно в реальных проектах mode не используется, но для клиентской отправки в GAS - workaround
-        alert('Спасибо за заполнение анкеты! Ваша заявка успешно отправлена.');
-        resetForm(); // Вызываем функцию сброса формы
-    })
-    .catch(error => {
-        console.error('Ошибка при отправке данных в Google Таблицу:', error);
-        alert('Произошла ошибка при отправке формы. Пожалуйста, попробуйте позже или свяжитесь с нами напрямую.');
-    });
-}
+        // Отправляем данные (теперь через обновленную функцию sendEmail)
+        sendEmail(data);
     } else {
         alert('Пожалуйста, заполните все обязательные поля.');
     }
 });
 
-// Функция отправки данных (демонстрация)
+// Функция отправки данных в Telegram через Vercel API Route
 function sendEmail(formData) {
-    // Для демонстрации используем alert
-    alert('Спасибо за заполнение анкеты! Ваши данные были отправлены (в реальном проекте они пошли бы на сервер).');
-    
-    console.log('Отправленные данные:', formData);
-    
-    // Сбрасываем форму
-    resetForm();
+    // URL вашего скрипта на Vercel (ЗАМЕНИТЬ НА ВАШ РЕАЛЬНЫЙ URL!)
+    // Пример: https://your-project-name.vercel.app/api/telegram-webhook
+    const telegramWebhookUrl = 'https://YOUR_VERCEL_URL.vercel.app/api/telegram-webhook';
+
+    fetch(telegramWebhookUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (response.ok) {
+            // Показываем всплывающее окно об успехе
+            showPopup('Ваш релиз успешно отправлен!', true);
+            resetForm(); // Сбрасываем форму
+        } else {
+            throw new Error('Ошибка сервера');
+        }
+    })
+    .catch(error => {
+        console.error('Ошибка при отправке в Telegram:', error);
+        showPopup('Произошла ошибка. Напишите нам в Telegram @cdcult_records', true);
+    });
 }
 
 // Функция сброса формы
@@ -220,3 +204,79 @@ function resetForm() {
     document.getElementById('trackFields').style.display = 'none';
     Object.keys(selectedValues).forEach(key => selectedValues[key] = '');
 }
+
+// Функция для показа модального окна
+function showPopup(message, isFinal = false) {
+    const existingPopup = document.getElementById('custom-popup');
+    if (existingPopup) {
+        existingPopup.remove();
+    }
+
+    const overlay = document.createElement('div');
+    overlay.id = 'custom-popup';
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        font-family: 'Segoe UI', sans-serif;
+    `;
+
+    const popup = document.createElement('div');
+    popup.style.cssText = `
+        background-color: #111;
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 80%;
+        width: 400px;
+        box-shadow: 0 4px 20px rgba(255,255,255,0.1);
+        animation: fadeIn 0.3s ease-out;
+    `;
+    popup.innerHTML = `<p style="margin: 0; font-size: 18px;">${message}</p>`;
+
+    if (isFinal) {
+        const button = document.createElement('button');
+        button.textContent = 'ОК';
+        button.style.cssText = `
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        `;
+        button.onclick = () => hidePopup();
+        popup.appendChild(button);
+    }
+
+    overlay.appendChild(popup);
+    document.body.appendChild(overlay);
+}
+
+// Функция для скрытия модального окна
+function hidePopup() {
+    const popup = document.getElementById('custom-popup');
+    if (popup) {
+        popup.remove();
+    }
+}
+
+// Добавляем анимацию в CSS
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
+    }
+`;
+document.head.appendChild(style);
