@@ -165,60 +165,45 @@ document.getElementById('distributionForm').addEventListener('submit', function(
     }
 });
 
-// Функция отправки данных через mailto (открывает почтовый клиент)
+// Функция отправки данных через Formspree
 function sendEmail(formData) {
-    // Формируем текст письма
-    let subject = "Новая заявка на дистрибуцию";
-    let body = "📦 Новая заявка\n\n";
-    body += `Основные артист(-ы): ${formData.artists || 'Не указано'}\n`;
-    body += `Тип релиза: ${formData.releaseType || 'Не указано'}\n`;
-    body += `Название релиза: ${formData.releaseName || 'Не указано'}\n`;
-    body += `Подзаголовок: ${formData.subtitle || 'Не указано'}\n`;
-    body += `Перенос/заливка: ${formData.transfer || 'Не указано'}\n`;
-    if (formData.upc) body += `UPC: ${formData.upc}\n`;
-    if (formData.originalReleaseDate) body += `Оригинальная дата релиза: ${formData.originalReleaseDate}\n`;
-    body += `Жанр: ${formData.genre || 'Не указано'}\n`;
-    body += `Дата выхода: ${formData.releaseDate || 'Не указано'}\n`;
-    body += `ФИО автора текста: ${formData.lyricist || 'Не указано'}\n`;
-    body += `ФИО автора инструментала: ${formData.composer || 'Не указано'}\n`;
-    body += `Ненормативная лексика: ${formData.profanity || 'Не указано'}\n`;
-    body += `Ссылка на архив: ${formData.archiveLink || 'Не указана'}\n`;
-    body += `Spotify: ${formData.spotifyProfile || 'Не указано'}\n`;
-    if (formData.spotifyProfileUrl) body += `Spotify URL: ${formData.spotifyProfileUrl}\n`;
-    body += `Apple Music: ${formData.appleProfile || 'Не указано'}\n`;
-    if (formData.appleProfileUrl) body += `Apple Music URL: ${formData.appleProfileUrl}\n`;
-    body += `Telegram: ${formData.telegram || 'Не указано'}\n`;
-    body += `Комментарий: ${formData.comments || 'Не указано'}\n`;
+    // URL вашего эндпоинта Formspree
+    const formspreeUrl = 'https://formspree.io/f/xeovjkbn'; // ← ВАША ССЫЛКА
 
-    // Добавляем информацию о треках (если есть)
-    if (formData['trackName[]'] && Array.isArray(formData['trackName[]'])) {
-      body += '\nТреки:\n';
-      for (let i = 0; i < formData['trackName[]'].length; i++) {
-        const trackNum = i + 1;
-        body += `\nТрек ${trackNum}:\n`;
-        body += `- Название: ${formData['trackName[]'][i] || 'Не указано'}\n`;
-        body += `- Версия: ${formData['trackVersion[]'] ? formData['trackVersion[]'][i] : 'Не указана'}\n`;
-        body += `- ISRC: ${formData['isrc[]'] ? formData['isrc[]'][i] : 'Не указан'}\n`;
-        body += `- Артист(ы): ${formData['trackArtist[]'] ? formData['trackArtist[]'][i] : 'Не указано'}\n`;
-        body += `- Автор инструментала: ${formData['trackComposer[]'] ? formData['trackComposer[]'][i] : 'Не указано'}\n`;
-        body += `- Автор текста: ${formData['trackLyricist[]'] ? formData['trackLyricist[]'][i] : 'Не указано'}\n`;
-        body += `- Лексика: ${formData[`trackProfanity${trackNum}`] || 'Не указана'}\n`;
-      }
+    // Formspree ожидает обычный объект FormData, а не JSON.
+    // Создадим новый FormData и добавим в него все поля.
+    const formDataToSend = new FormData();
+
+    // Перебираем все ключи и значения из собранного formData
+    for (let [key, value] of Object.entries(formData)) {
+        if (Array.isArray(value)) {
+            // Если значение - массив (например, треки), добавляем каждый элемент отдельно
+            value.forEach(item => formDataToSend.append(key, item));
+        } else {
+            // Иначе просто добавляем пару ключ-значение
+            formDataToSend.append(key, value);
+        }
     }
 
-    // Кодировка для mailto
-    const encodedBody = encodeURIComponent(body);
-    const encodedSubject = encodeURIComponent(subject);
-
-    // Создаем ссылку mailto
-    const mailtoLink = `mailto:ilyokserg@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
-
-    // Открываем почтовый клиент
-    window.location.href = mailtoLink;
-
-    // Показываем всплывающее окно об успехе
-    showPopup('Ваш релиз успешно отправлен!', true);
-    resetForm(); // Сбрасываем форму
+    // Отправляем данные на Formspree
+    fetch(formspreeUrl, {
+        method: 'POST',
+        body: formDataToSend, // Отправляем как FormData, не JSON
+    })
+    .then(response => {
+        if (response.ok) {
+            // Показываем всплывающее окно об успехе
+            showPopup('Ваш релиз успешно отправлен!', true);
+            resetForm(); // Сбрасываем форму
+        } else {
+            // Если сервер вернул ошибку (например, 4xx)
+            throw new Error(`Formspree error: ${response.status} ${response.statusText}`);
+        }
+    })
+    .catch(error => {
+        console.error('Ошибка при отправке через Formspree:', error);
+        showPopup('Произошла ошибка. Пожалуйста, свяжитесь с нами напрямую.', true);
+    });
 }
 
 // Функция сброса формы
@@ -276,12 +261,13 @@ function showPopup(message, isFinal = false) {
         button.style.cssText = `
             margin-top: 20px;
             padding: 10px 20px;
-            background-color: #4a90e2;
-            color: white;
-            border: none;
+            background-color: #fff; /* Белый фон кнопки */
+            color: #000; /* Чёрный текст */
+            border: 1px solid #444; /* Тонкая граница */
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
+            font-weight: 600;
         `;
         button.onclick = () => hidePopup();
         popup.appendChild(button);
@@ -308,4 +294,3 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
-
