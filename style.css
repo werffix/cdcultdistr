@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Courier New', monospace;
 }
 
 body {
@@ -276,4 +276,5 @@ textarea:focus {
         flex: 1 1 calc(50% - 10px);
         min-width: 120px;
     }
+
 }
