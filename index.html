@@ -3,8 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CDCULT Distribution - Форма отгрузки релизов</title>
-    <link rel="stylesheet" href="style.css">
+    <title>CDCULT Distribution beta - Форма отгрузки релизов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #111;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(255,255,255,0.1);
+        }
+
+        .header h1 {
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .header .beta {
+            color: #aaa;
+            font-size: 14px;
+            font-weight: normal;
+            margin-left: 10px;
+        }
+
+        .header p {
+            color: #ccc;
+            font-size: 16px;
+            margin-top: 10px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .form-container {
+            background-color: #111;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(255,255,255,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .required::after {
+            content: " *";
+            color: red;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #222;
+            color: #fff;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="url"]:focus,
+        input[type="date"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #4a90e2;
+            background-color: #333;
+        }
+
+        /* Стили для прямоугольных кнопок выбора */
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .btn-choice {
+            padding: 12px 20px;
+            background-color: #222;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 16px;
+            flex: 1 1 calc(33.333% - 10px);
+            min-width: 100px;
+        }
+
+        .btn-choice:hover {
+            background-color: #333;
+        }
+
+        .btn-choice.selected {
+            background-color: #fff; /* Белый цвет при выборе */
+            color: #000; /* Черный текст */
+            border-color: #fff;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #fff; /* Кнопка белая */
+            color: #000; /* Текст черный */
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #ddd;
+        }
+
+        .support-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .support-btn:hover {
+            background-color: #666;
+        }
+
+        .transfer-fields {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #222;
+            border-radius: 8px;
+        }
+
+        .agreement {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #222;
+            border-radius: 8px;
+        }
+
+        .agreement label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .agreement input[type="checkbox"] {
+            margin-top: 3px;
+        }
+
+        .file-requirements {
+            background-color: #222;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .profile-input {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .profile-input input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .submit-btn, .support-btn {
+                padding: 12px;
+                font-size: 16px;
+            }
+            
+            .btn-choice {
+                flex: 1 1 calc(50% - 10px);
+                min-width: 120px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="header">
@@ -36,6 +265,12 @@
             <div class="form-group">
                 <label for="releaseName" class="required">Название релиза</label>
                 <input type="text" id="releaseName" name="releaseName" placeholder="Ваш ответ" required>
+            </div>
+
+            <!-- Названия треков -->
+            <div class="form-group">
+                <label for="trackNames">Названия треков</label>
+                <textarea id="trackNames" name="trackNames" rows="4" placeholder="Например: 1. Никнейм - Название, 2. Никнейм - Название... Если вы переносите трек - оставьте ISRC в доп. комментариях"></textarea>
             </div>
 
             <!-- Подзаголовок -->
@@ -96,19 +331,6 @@
                     <div class="btn-choice" data-value="Нету">Нету</div>
                 </div>
                 <input type="hidden" id="profanity" name="profanity" required>
-            </div>
-
-            <!-- Динамические поля для треков -->
-            <div class="form-group" id="tracksContainer">
-                <div class="track-fields" id="trackFields" style="display: none;">
-                    <h3>Добавьте треки</h3>
-                    <div id="tracksList">
-                        <!-- Здесь будут добавляться треки -->
-                    </div>
-                    <div class="track-controls">
-                        <button type="button" class="add-track-btn" id="addTrackBtn">Добавить трек</button>
-                    </div>
-                </div>
             </div>
 
             <!-- Ссылка на архив -->
@@ -180,7 +402,140 @@
     <!-- Кнопка поддержки -->
     <button class="support-btn" onclick="window.location.href='https://cdcult_records.t.me'">Поддержка</button>
 
-    <script src="script.js"></script>
-</body>
+    <script>
+        // Глобальный объект для хранения выбранных значений всех групп
+        const selectedValues = {};
 
+        // Функция для управления прямоугольными кнопками выбора
+        function setupButtonGroup(buttonGroupClass, hiddenInputId) {
+            const buttonGroup = document.querySelector(`${buttonGroupClass}`);
+            const buttons = buttonGroup.querySelectorAll('.btn-choice');
+            const hiddenInput = document.getElementById(hiddenInputId);
+
+            const groupId = buttonGroup.getAttribute('data-group');
+
+            if (!selectedValues[groupId]) {
+                selectedValues[groupId] = '';
+            }
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    buttons.forEach(btn => btn.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedValues[groupId] = this.dataset.value;
+                    hiddenInput.value = this.dataset.value;
+
+                    handleSelection(groupId, this.dataset.value);
+                });
+            });
+        }
+
+        // Специальная функция для обработки изменений выбора
+        function handleSelection(groupId, value) {
+            if (groupId === 'transfer') {
+                const transferFields = document.getElementById('transferFields');
+                transferFields.style.display = value === 'Да' ? 'block' : 'none';
+            }
+
+            if (groupId === 'spotifyProfile') {
+                document.getElementById('spotifyInput').style.display = value === 'Есть' ? 'block' : 'none';
+            }
+
+            if (groupId === 'appleProfile') {
+                document.getElementById('appleInput').style.display = value === 'Есть' ? 'block' : 'none';
+            }
+        }
+
+        // Инициализация всех групп кнопок
+        setupButtonGroup('.button-group[data-group="releaseType"]', 'releaseType');
+        setupButtonGroup('.button-group[data-group="transfer"]', 'transfer');
+        setupButtonGroup('.button-group[data-group="profanity"]', 'profanity');
+        setupButtonGroup('.button-group[data-group="spotifyProfile"]', 'spotifyProfile');
+        setupButtonGroup('.button-group[data-group="appleProfile"]', 'appleProfile');
+
+        // Обработчик отправки формы
+        document.getElementById('distributionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Проверяем обязательные поля
+            const requiredFields = document.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                } else {
+                    field.style.borderColor = '#444';
+                }
+            });
+            
+            if (isValid) {
+                // Собираем данные формы
+                const formData = new FormData(this);
+                const data = {};
+                for (let [key, value] of formData.entries()) {
+                    if (data[key]) {
+                        if (!Array.isArray(data[key])) {
+                            data[key] = [data[key]];
+                        }
+                        data[key].push(value);
+                    } else {
+                        data[key] = value;
+                    }
+                }
+
+                // Отправляем данные на Google Apps Script
+                sendEmail(data);
+            } else {
+                alert('Пожалуйста, заполните все обязательные поля.');
+            }
+        });
+
+        // Функция отправки данных в Google Таблицу через Apps Script
+        function sendEmail(formData) {
+            // ВАЖНО: ЗАМЕНИТЕ ЭТОТ URL НА СКОПИРОВАННЫЙ ИЗ ШАГА 2!
+            const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbw_2YB60_ms0q9HWLMtTF6qaZuB7tpE6U_Lco9EpvU1rxDK3-hqKrCGPHrWl_IPfg/exec';
+
+            // Подготовим данные к отправке. FormData нужно преобразовать в объект.
+            const plainFormData = {};
+            for (let [key, value] of Object.entries(formData)) {
+                if (Array.isArray(value)) {
+                    plainFormData[key] = value.join(', '); // Преобразуем массивы в строки
+                } else {
+                    plainFormData[key] = value;
+                }
+            }
+
+            // Отправляем данные на Google Apps Script
+            fetch(googleScriptUrl, {
+                method: 'POST',
+                mode: 'no-cors', // Обход CORS - важно для внешнего запроса
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(plainFormData),
+            })
+            .then(response => {
+                // mode: 'no-cors' не позволяет получить детали ответа, но успешная отправка работает
+                alert('Спасибо за заполнение анкеты! Ваша заявка успешно отправлена.');
+                resetForm(); // Вызываем функцию сброса формы
+            })
+            .catch(error => {
+                console.error('Ошибка при отправке данных в Google Таблицу:', error);
+                alert('Произошла ошибка при отправке формы. Пожалуйста, попробуйте позже или свяжитесь с нами напрямую.');
+            });
+        }
+
+        // Функция сброса формы
+        function resetForm() {
+            document.getElementById('distributionForm').reset();
+            document.querySelectorAll('.btn-choice.selected').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('transferFields').style.display = 'none';
+            document.getElementById('spotifyInput').style.display = 'none';
+            document.getElementById('appleInput').style.display = 'none';
+            Object.keys(selectedValues).forEach(key => selectedValues[key] = '');
+        }
+    </script>
+</body>
 </html>
