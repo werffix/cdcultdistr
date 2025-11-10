@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CDCULT Distribution beta - Форма отгрузки релизов</title>
+    <title>CDCULT Distribution beta - Release Submission Form</title>
     <style>
         * {
             margin: 0;
@@ -43,6 +43,25 @@
             font-size: 14px;
             font-weight: normal;
             margin-left: 10px;
+        }
+
+        .header .lang-btn {
+            background-color: #333;
+            color: #ccc;
+            border: 1px solid #555;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: 10px;
+            min-width: 30px;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .header .lang-btn:hover {
+            background-color: #4a90e2;
+            color: white;
         }
 
         .header p {
@@ -126,16 +145,16 @@
         }
 
         .btn-choice.selected {
-            background-color: #fff; /* Белый цвет при выборе */
-            color: #000; /* Черный текст */
+            background-color: #fff;
+            color: #000;
             border-color: #fff;
         }
 
         .submit-btn {
             width: 100%;
             padding: 15px;
-            background-color: #fff; /* Кнопка белая */
-            color: #000; /* Текст черный */
+            background-color: #fff;
+            color: #000;
             border: none;
             border-radius: 8px;
             font-size: 18px;
@@ -237,63 +256,64 @@
 </head>
 <body>
     <div class="header">
-        <h1>CDCULT Distribution</h1>
-        <span class="beta">beta</span>
+        <h1 id="header-title">CDCULT Distribution</h1>
+        <span class="beta" id="header-beta">beta</span>
+        <button class="lang-btn" id="langBtn">En</button>
     </div>
-    <div style="text-align: center; color: #ccc; margin-bottom: 20px;">Форма отгрузки релизов</div>
+    <div style="text-align: center; color: #ccc; margin-bottom: 20px;" id="header-subtitle">Release Submission Form</div>
 
     <div class="form-container">
         <form id="distributionForm">
             <!-- Основные артисты -->
             <div class="form-group">
-                <label for="artists" class="required">Основные артист(-ы)</label>
-                <input type="text" id="artists" name="artists" placeholder="Ваш ответ" required>
+                <label for="artists" class="required" id="label-artists">Main Artist(s)</label>
+                <input type="text" id="artists" name="artists" placeholder="Your answer" required>
             </div>
 
-            <!-- Тип релиза (прямоугольные кнопки) -->
+            <!-- Тип релиза -->
             <div class="form-group">
-                <label class="required">Тип релиза</label>
+                <label class="required" id="label-releaseType">Release Type</label>
                 <div class="button-group" data-group="releaseType">
-                    <div class="btn-choice" data-value="Single">Сингл</div>
+                    <div class="btn-choice" data-value="Single">Single</div>
                     <div class="btn-choice" data-value="EP">EP</div>
-                    <div class="btn-choice" data-value="Album">Альбом</div>
+                    <div class="btn-choice" data-value="Album">Album</div>
                 </div>
                 <input type="hidden" id="releaseType" name="releaseType" required>
             </div>
 
             <!-- Название релиза -->
             <div class="form-group">
-                <label for="releaseName" class="required">Название релиза</label>
-                <input type="text" id="releaseName" name="releaseName" placeholder="Ваш ответ" required>
+                <label for="releaseName" class="required" id="label-releaseName">Release Title</label>
+                <input type="text" id="releaseName" name="releaseName" placeholder="Your answer" required>
             </div>
 
             <!-- Названия треков -->
             <div class="form-group">
-                <label for="trackNames">Названия треков</label>
-                <textarea id="trackNames" name="trackNames" rows="4" placeholder="Например: 1. Никнейм - Название, 2. Никнейм - Название... Если вы переносите трек - оставьте ISRC в доп. комментариях"></textarea>
+                <label for="trackNames" id="label-trackNames">Track Names</label>
+                <textarea id="trackNames" name="trackNames" rows="4" placeholder="e.g., 1. ArtistName - TrackTitle, 2. ArtistName - TrackTitle... If you're re-uploading, leave ISRC in comments"></textarea>
             </div>
 
             <!-- Подзаголовок -->
             <div class="form-group">
-                <label for="subtitle">Подзаголовок (speed up, slowed и ТД.)</label>
-                <input type="text" id="subtitle" name="subtitle" placeholder="Ваш ответ">
+                <label for="subtitle" id="label-subtitle">Subtitle (speed up, slowed etc.)</label>
+                <input type="text" id="subtitle" name="subtitle" placeholder="Your answer">
             </div>
 
-            <!-- Перенос или перезаливание (прямоугольные кнопки) -->
+            <!-- Перенос или перезаливание -->
             <div class="form-group">
-                <label class="required">Вы переносите или перезаливаете релиз</label>
+                <label class="required" id="label-transfer">Are you transferring or re-uploading?</label>
                 <div class="button-group" data-group="transfer">
-                    <div class="btn-choice" data-value="Да">Да</div>
-                    <div class="btn-choice" data-value="Нет, релиз новый">Нет, релиз новый</div>
+                    <div class="btn-choice" data-value="Yes">Yes</div>
+                    <div class="btn-choice" data-value="No, new release">No, new release</div>
                 </div>
                 <input type="hidden" id="transfer" name="transfer" required>
                 <div class="transfer-fields" id="transferFields">
                     <div class="form-group">
-                        <label for="upc">UPC</label>
-                        <input type="text" id="upc" name="upc" placeholder="Ваш ответ">
+                        <label for="upc" id="label-upc">UPC</label>
+                        <input type="text" id="upc" name="upc" placeholder="Your answer">
                     </div>
                     <div class="form-group">
-                        <label for="originalReleaseDate">Дата оригинального релиза</label>
+                        <label for="originalReleaseDate" id="label-originalReleaseDate">Original Release Date</label>
                         <input type="date" id="originalReleaseDate" name="originalReleaseDate">
                     </div>
                 </div>
@@ -301,108 +321,238 @@
 
             <!-- Жанр релиза -->
             <div class="form-group">
-                <label for="genre" class="required">Жанр релиза</label>
-                <input type="text" id="genre" name="genre" placeholder="Ваш ответ" required>
+                <label for="genre" class="required" id="label-genre">Genre</label>
+                <input type="text" id="genre" name="genre" placeholder="Your answer" required>
             </div>
 
             <!-- Дата выхода -->
             <div class="form-group">
-                <label for="releaseDate" class="required">Дата, когда должен выйти релиз (от 3 дней)</label>
+                <label for="releaseDate" class="required" id="label-releaseDate">Release Date (min. 3 days)</label>
                 <input type="date" id="releaseDate" name="releaseDate" required>
             </div>
 
             <!-- ФИО автора текста -->
             <div class="form-group">
-                <label for="lyricist" class="required">ФИО автора(-ов) текста (поставьте "-" если трек инструментал)</label>
-                <input type="text" id="lyricist" name="lyricist" placeholder="Ваш ответ" required>
+                <label for="lyricist" class="required" id="label-lyricist">Lyricist(s) Full Name (use "-" if instrumental)</label>
+                <input type="text" id="lyricist" name="lyricist" placeholder="Your answer" required>
             </div>
 
             <!-- ФИО автора инструментала -->
             <div class="form-group">
-                <label for="composer" class="required">ФИО автора(-ов) инструментала</label>
-                <input type="text" id="composer" name="composer" placeholder="Ваш ответ" required>
+                <label for="composer" class="required" id="label-composer">Composer(s) Full Name</label>
+                <input type="text" id="composer" name="composer" placeholder="Your answer" required>
             </div>
 
-            <!-- Ненормативная лексика (прямоугольные кнопки) -->
+            <!-- Ненормативная лексика -->
             <div class="form-group">
-                <label class="required">Ненормативная лексика</label>
+                <label class="required" id="label-profanity">Profanity</label>
                 <div class="button-group" data-group="profanity">
-                    <div class="btn-choice" data-value="Есть">Есть</div>
-                    <div class="btn-choice" data-value="Нету">Нету</div>
+                    <div class="btn-choice" data-value="Yes">Yes</div>
+                    <div class="btn-choice" data-value="No">No</div>
                 </div>
                 <input type="hidden" id="profanity" name="profanity" required>
             </div>
 
             <!-- Ссылка на архив -->
             <div class="form-group">
-                <label for="archiveLink" class="required">Ссылка на архив с файлами</label>
-                <input type="url" id="archiveLink" name="archiveLink" placeholder="Ваш ответ" required>
+                <label for="archiveLink" class="required" id="label-archiveLink">Archive Link</label>
+                <input type="url" id="archiveLink" name="archiveLink" placeholder="Your answer" required>
                 <div class="file-requirements">
-                    <strong>Требования к файлам для проверки и загрузки вашего релиза:</strong><br>
-                    • Аудио: .wav (16 бит, 44.1 кГц) или .flac<br>
-                    • Обложка: .jpg (разрешение 1440x1440 или 3000x3000). Конвертировать - <a href="https://vk.cc/cOgtL9" target="_blank" style="color: #4a90e2;">https://vk.cc/cOgtL9</a><br>
-                    • Видеозапись проекта 30 секунд (ОБЯЗАТЕЛЬНО!!! Без видеозаписи релиз не будет приниматься)<br>
-                    • Пример названия файла: 1. Никнейм-Название.wav
+                    <strong>File Requirements:</strong><br>
+                    • Audio: .wav (16-bit, 44.1 kHz) or .flac<br>
+                    • Cover: .jpg (1440x1440 or 3000x3000). Convert - <a href="https://vk.cc/cOgtL9" target="_blank" style="color: #4a90e2;">https://vk.cc/cOgtL9</a><br>
+                    • 30-second project video (MANDATORY!!! No video = no release)<br>
+                    • Filename example: 1. ArtistName-Title.wav
                 </div>
             </div>
 
             <!-- Spotify профиль -->
             <div class="form-group">
-                <label class="required">Карточка/профиль артиста в Spotify</label>
+                <label class="required" id="label-spotifyProfile">Spotify Artist Profile</label>
                 <div class="button-group" data-group="spotifyProfile">
-                    <div class="btn-choice" data-value="Есть">Есть</div>
-                    <div class="btn-choice" data-value="Нету, нужно создать">Нету, нужно создать</div>
-                    <div class="btn-choice" data-value="Уже указывал">Уже указывал</div>
+                    <div class="btn-choice" data-value="Yes">Yes</div>
+                    <div class="btn-choice" data-value="No, need to create">No, need to create</div>
+                    <div class="btn-choice" data-value="Already provided">Already provided</div>
                 </div>
                 <input type="hidden" id="spotifyProfile" name="spotifyProfile" required>
                 <div class="profile-input" id="spotifyInput">
-                    <input type="text" id="spotifyProfileUrl" name="spotifyProfileUrl" placeholder="Ссылка">
+                    <input type="text" id="spotifyProfileUrl" name="spotifyProfileUrl" placeholder="Link">
                 </div>
             </div>
 
             <!-- Apple Music профиль -->
             <div class="form-group">
-                <label>Карточка/профиль артиста в Apple Music</label>
+                <label id="label-appleProfile">Apple Music Artist Profile</label>
                 <div class="button-group" data-group="appleProfile">
-                    <div class="btn-choice" data-value="Есть">Есть</div>
-                    <div class="btn-choice" data-value="Нету, нужно создать">Нету, нужно создать</div>
-                    <div class="btn-choice" data-value="Уже указывал">Уже указывал</div>
+                    <div class="btn-choice" data-value="Yes">Yes</div>
+                    <div class="btn-choice" data-value="No, need to create">No, need to create</div>
+                    <div class="btn-choice" data-value="Already provided">Already provided</div>
                 </div>
                 <input type="hidden" id="appleProfile" name="appleProfile">
                 <div class="profile-input" id="appleInput">
-                    <input type="text" id="appleProfileUrl" name="appleProfileUrl" placeholder="Ссылка">
+                    <input type="text" id="appleProfileUrl" name="appleProfileUrl" placeholder="Link">
                 </div>
             </div>
 
             <!-- Ваш Telegram -->
             <div class="form-group">
-                <label for="telegram" class="required">Ваш Telegram (@username или номер телефона)</label>
-                <input type="text" id="telegram" name="telegram" placeholder="Ваш ответ" required>
+                <label for="telegram" class="required" id="label-telegram">Your Telegram (@username or phone)</label>
+                <input type="text" id="telegram" name="telegram" placeholder="Your answer" required>
             </div>
 
             <!-- Дополнительный комментарий -->
             <div class="form-group">
-                <label for="comments">Доп. Комментарий к релизу (при необходимости)</label>
-                <textarea id="comments" name="comments" rows="4" placeholder="Ваш ответ"></textarea>
+                <label for="comments" id="label-comments">Additional Comments</label>
+                <textarea id="comments" name="comments" rows="4" placeholder="Your answer"></textarea>
             </div>
 
             <!-- Согласие с офертой -->
             <div class="agreement">
                 <label>
                     <input type="checkbox" id="agreementCheckbox" required>
-                    Я ознакомился и согласен с <a href="https://cdcult.ru/oferta" target="_blank" style="color: #4a90e2;">публичной офертой</a> и <a href="https://cdcult.ru/privacy-policy" target="_blank" style="color: #4a90e2;">политикой конфиденциальности</a>.
+                    I have read and agree to the <a href="https://cdcult.ru/oferta" target="_blank" style="color: #4a90e2;">Public Offer</a> and <a href="https://cdcult.ru/privacy-policy" target="_blank" style="color: #4a90e2;">Privacy Policy</a>.
                 </label>
             </div>
 
             <!-- Кнопка отправки -->
-            <button type="submit" class="submit-btn">Отправить</button>
+            <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
         </form>
     </div>
 
     <!-- Кнопка поддержки -->
-    <button class="support-btn" onclick="window.location.href='https://cdcult_records.t.me'">Поддержка</button>
+    <button class="support-btn" onclick="window.location.href='https://cdcult_records.t.me'">Support</button>
 
     <script>
+        // Переводы
+        const translations = {
+            ru: {
+                headerTitle: "CDCULT Distribution",
+                headerBeta: "beta",
+                headerSubtitle: "Форма отгрузки релизов",
+                labelArtists: "Основные артист(-ы)",
+                labelReleaseType: "Тип релиза",
+                labelReleaseName: "Название релиза",
+                labelTrackNames: "Названия треков",
+                labelSubtitle: "Подзаголовок (speed up, slowed и ТД.)",
+                labelTransfer: "Вы переносите или перезаливаете релиз",
+                labelUpc: "UPC",
+                labelOriginalReleaseDate: "Дата оригинального релиза",
+                labelGenre: "Жанр релиза",
+                labelReleaseDate: "Дата, когда должен выйти релиз (от 3 дней)",
+                labelLyricist: "ФИО автора(-ов) текста (поставьте "-" если трек инструментал)",
+                labelComposer: "ФИО автора(-ов) инструментала",
+                labelProfanity: "Ненормативная лексика",
+                labelArchiveLink: "Ссылка на архив с файлами",
+                labelSpotifyProfile: "Карточка/профиль артиста в Spotify",
+                labelAppleProfile: "Карточка/профиль артиста в Apple Music",
+                labelTelegram: "Ваш Telegram (@username или номер телефона)",
+                labelComments: "Доп. Комментарий к релизу (при необходимости)",
+                submitBtn: "Отправить",
+                fileRequirements: "Требования к файлам для проверки и загрузки вашего релиза:\n• Аудио: .wav (16 бит, 44.1 кГц) или .flac\n• Обложка: .jpg (разрешение 1440x1440 или 3000x3000). Конвертировать - <a href=\"https://vk.cc/cOgtL9\" target=\"_blank\" style=\"color: #4a90e2;\">https://vk.cc/cOgtL9</a>\n• Видеозапись проекта 30 секунд (ОБЯЗАТЕЛЬНО!!! Без видеозаписи релиз не будет приниматься)\n• Пример названия файла: 1. Никнейм-Название.wav",
+                agreementText: "Я ознакомился и согласен с <a href=\"https://cdcult.ru/oferta\" target=\"_blank\" style=\"color: #4a90e2;\">публичной офертой</a> и <a href=\"https://cdcult.ru/privacy-policy\" target=\"_blank\" style=\"color: #4a90e2;\">политикой конфиденциальности</a>.",
+                btnEn: "En",
+                alertSuccess: "Спасибо за заполнение анкеты! Ваша заявка успешно отправлена.",
+                alertError: "Произошла ошибка при отправке формы. Пожалуйста, попробуйте позже или свяжитесь с нами напрямую.",
+                alertRequired: "Пожалуйста, заполните все обязательные поля.",
+                alertTracks: "Для EP и Album необходимо добавить хотя бы один трек.",
+                btnOk: "ОК"
+            },
+            en: {
+                headerTitle: "CDCULT Distribution",
+                headerBeta: "beta",
+                headerSubtitle: "Release Submission Form",
+                labelArtists: "Main Artist(s)",
+                labelReleaseType: "Release Type",
+                labelReleaseName: "Release Title",
+                labelTrackNames: "Track Names",
+                labelSubtitle: "Subtitle (speed up, slowed etc.)",
+                labelTransfer: "Are you transferring or re-uploading?",
+                labelUpc: "UPC",
+                labelOriginalReleaseDate: "Original Release Date",
+                labelGenre: "Genre",
+                labelReleaseDate: "Release Date (min. 3 days)",
+                labelLyricist: "Lyricist(s) Full Name (use \"-\" if instrumental)",
+                labelComposer: "Composer(s) Full Name",
+                labelProfanity: "Profanity",
+                labelArchiveLink: "Archive Link",
+                labelSpotifyProfile: "Spotify Artist Profile",
+                labelAppleProfile: "Apple Music Artist Profile",
+                labelTelegram: "Your Telegram (@username or phone)",
+                labelComments: "Additional Comments",
+                submitBtn: "Submit",
+                fileRequirements: "File Requirements:\n• Audio: .wav (16-bit, 44.1 kHz) or .flac\n• Cover: .jpg (1440x1440 or 3000x3000). Convert - <a href=\"https://vk.cc/cOgtL9\" target=\"_blank\" style=\"color: #4a90e2;\">https://vk.cc/cOgtL9</a>\n• 30-second project video (MANDATORY!!! No video = no release)\n• Filename example: 1. ArtistName-Title.wav",
+                agreementText: "I have read and agree to the <a href=\"https://cdcult.ru/oferta\" target=\"_blank\" style=\"color: #4a90e2;\">Public Offer</a> and <a href=\"https://cdcult.ru/privacy-policy\" target=\"_blank\" style=\"color: #4a90e2;\">Privacy Policy</a>.",
+                btnEn: "Ru",
+                alertSuccess: "Thank you for filling out the form! Your submission has been successfully sent.",
+                alertError: "An error occurred while submitting the form. Please try again later or contact us directly.",
+                alertRequired: "Please fill in all required fields.",
+                alertTracks: "For EP and Album, please add at least one track.",
+                btnOk: "OK"
+            }
+        };
+
+        // Текущий язык
+        let currentLang = localStorage.getItem('lang') || 'ru';
+
+        // Функция перевода
+        function translate() {
+            const t = translations[currentLang];
+
+            document.getElementById('header-title').innerText = t.headerTitle;
+            document.getElementById('header-beta').innerText = t.headerBeta;
+            document.getElementById('header-subtitle').innerHTML = t.headerSubtitle;
+            document.getElementById('langBtn').innerText = t.btnEn;
+
+            document.getElementById('label-artists').innerText = t.labelArtists;
+            document.getElementById('label-releaseType').innerText = t.labelReleaseType;
+            document.getElementById('label-releaseName').innerText = t.labelReleaseName;
+            document.getElementById('label-trackNames').innerText = t.labelTrackNames;
+            document.getElementById('label-subtitle').innerText = t.labelSubtitle;
+            document.getElementById('label-transfer').innerText = t.labelTransfer;
+            document.getElementById('label-upc').innerText = t.labelUpc;
+            document.getElementById('label-originalReleaseDate').innerText = t.labelOriginalReleaseDate;
+            document.getElementById('label-genre').innerText = t.labelGenre;
+            document.getElementById('label-releaseDate').innerText = t.labelReleaseDate;
+            document.getElementById('label-lyricist').innerText = t.labelLyricist;
+            document.getElementById('label-composer').innerText = t.labelComposer;
+            document.getElementById('label-profanity').innerText = t.labelProfanity;
+            document.getElementById('label-archiveLink').innerText = t.labelArchiveLink;
+            document.getElementById('label-spotifyProfile').innerText = t.labelSpotifyProfile;
+            document.getElementById('label-appleProfile').innerText = t.labelAppleProfile;
+            document.getElementById('label-telegram').innerText = t.labelTelegram;
+            document.getElementById('label-comments').innerText = t.labelComments;
+            document.getElementById('submitBtn').innerText = t.submitBtn;
+
+            // Обновляем тексты в файловых требованиях и соглашении
+            document.querySelector('.file-requirements').innerHTML = t.fileRequirements;
+            document.querySelector('.agreement label').innerHTML = t.agreementText;
+
+            // Обновляем placeholder'ы
+            document.getElementById('artists').placeholder = t.labelArtists.replace(' *', '');
+            document.getElementById('releaseName').placeholder = t.labelReleaseName.replace(' *', '');
+            document.getElementById('trackNames').placeholder = t.labelTrackNames.replace(' *', '');
+            document.getElementById('subtitle').placeholder = t.labelSubtitle.replace(' *', '');
+            document.getElementById('upc').placeholder = t.labelUpc.replace(' *', '');
+            document.getElementById('genre').placeholder = t.labelGenre.replace(' *', '');
+            document.getElementById('lyricist').placeholder = t.labelLyricist.replace(' *', '');
+            document.getElementById('composer').placeholder = t.labelComposer.replace(' *', '');
+            document.getElementById('archiveLink').placeholder = t.labelArchiveLink.replace(' *', '');
+            document.getElementById('telegram').placeholder = t.labelTelegram.replace(' *', '');
+            document.getElementById('comments').placeholder = t.labelComments.replace(' *', '');
+            document.getElementById('spotifyProfileUrl').placeholder = t.labelSpotifyProfile.replace(' *', '');
+            document.getElementById('appleProfileUrl').placeholder = t.labelAppleProfile.replace(' *', '');
+        }
+
+        // Переключатель языка
+        document.getElementById('langBtn').addEventListener('click', () => {
+            currentLang = currentLang === 'ru' ? 'en' : 'ru';
+            localStorage.setItem('lang', currentLang);
+            translate();
+        });
+
+        // Инициализация
+        translate();
+
         // Глобальный объект для хранения выбранных значений всех групп
         const selectedValues = {};
 
@@ -434,15 +584,15 @@
         function handleSelection(groupId, value) {
             if (groupId === 'transfer') {
                 const transferFields = document.getElementById('transferFields');
-                transferFields.style.display = value === 'Да' ? 'block' : 'none';
+                transferFields.style.display = value === 'Yes' ? 'block' : 'none';
             }
 
             if (groupId === 'spotifyProfile') {
-                document.getElementById('spotifyInput').style.display = value === 'Есть' ? 'block' : 'none';
+                document.getElementById('spotifyInput').style.display = value === 'Yes' ? 'block' : 'none';
             }
 
             if (groupId === 'appleProfile') {
-                document.getElementById('appleInput').style.display = value === 'Есть' ? 'block' : 'none';
+                document.getElementById('appleInput').style.display = value === 'Yes' ? 'block' : 'none';
             }
         }
 
@@ -485,10 +635,10 @@
                     }
                 }
 
-                // Отправляем данные на Google Apps Script
+                // Отправляем данные на Google Таблицу
                 sendEmail(data);
             } else {
-                alert('Пожалуйста, заполните все обязательные поля.');
+                alert(translations[currentLang].alertRequired);
             }
         });
 
@@ -510,20 +660,19 @@
             // Отправляем данные на Google Apps Script
             fetch(googleScriptUrl, {
                 method: 'POST',
-                mode: 'no-cors', // Обход CORS - важно для внешнего запроса
+                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(plainFormData),
             })
             .then(response => {
-                // mode: 'no-cors' не позволяет получить детали ответа, но успешная отправка работает
-                alert('Спасибо за заполнение анкеты! Ваша заявка успешно отправлена.');
-                resetForm(); // Вызываем функцию сброса формы
+                alert(translations[currentLang].alertSuccess);
+                resetForm();
             })
             .catch(error => {
                 console.error('Ошибка при отправке данных в Google Таблицу:', error);
-                alert('Произошла ошибка при отправке формы. Пожалуйста, попробуйте позже или свяжитесь с нами напрямую.');
+                alert(translations[currentLang].alertError);
             });
         }
 
