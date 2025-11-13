@@ -90,7 +90,7 @@ document.getElementById('distributionForm').addEventListener('submit', function(
 // Функция отправки данных в Google Таблицу через Apps Script
 function sendEmail(formData) {
     // ВАЖНО: ЗАМЕНИТЕ ЭТОТ URL НА СКОПИРОВАННЫЙ ИЗ ШАГА 2!
-    const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbw_2YB60_ms0q9HWLMtTF6qaZuB7tpE6U_Lco9EpvU1rxDK3-hqKrCGPHrWl_IPfg/exec';
+    const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbwwl02jf05mXFklotT4WtfeyhDNSECBaLY4UquZeBlf_ysY5WKvkfKnKhLxe_TOe3g/exec';
 
     // Подготовим данные к отправке. FormData нужно преобразовать в объект.
     const plainFormData = {};
@@ -178,3 +178,4 @@ document.getElementById('checkStatusBtn').addEventListener('click', async () => 
         resultDiv.style.borderRadius = '8px';
     }
 });
+
