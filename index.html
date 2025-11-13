@@ -396,6 +396,13 @@
 
             <!-- Кнопка отправки -->
             <button type="submit" class="submit-btn">Отправить</button>
+            <!-- Кнопка для проверки состояния -->
+<div class="form-group">
+    <label for="checkStatus">Узнать состояние релиза</label>
+    <input type="text" id="checkReleaseName" placeholder="Введите название релиза" style="margin-bottom: 5px;">
+    <button type="button" class="submit-btn" id="checkStatusBtn" style="background-color: #555; padding: 10px;">Поиск</button>
+    <div id="statusResult" style="margin-top: 10px; font-weight: bold; text-align: center; min-height: 20px;"></div>
+</div>
         </form>
     </div>
 
@@ -539,3 +546,4 @@
     </script>
 </body>
 </html>
+
