@@ -132,3 +132,49 @@ function resetForm() {
     // trackFields больше нет, строка удалена
     Object.keys(selectedValues).forEach(key => selectedValues[key] = '');
 }
+// Функция проверки состояния релиза
+document.getElementById('checkStatusBtn').addEventListener('click', async () => {
+    const releaseNameInput = document.getElementById('checkReleaseName');
+    const resultDiv = document.getElementById('statusResult');
+    const releaseName = releaseNameInput.value.trim();
+
+    if (!releaseName) {
+        alert('Введите название релиза.');
+        return;
+    }
+
+    resultDiv.textContent = 'Проверяем...';
+    resultDiv.style.backgroundColor = '';
+    resultDiv.style.color = '#fff';
+
+    try {
+        // ЗАМЕНИТЕ НА СКОПИРОВАННЫЙ URL ИЗ ШАГА 2
+        const checkUrl = 'https://script.google.com/macros/s/YOUR_CHECK_STATUS_SCRIPT/exec';
+        
+        const response = await fetch(`${checkUrl}?releaseName=${encodeURIComponent(releaseName)}`);
+        const data = await response.json();
+
+        if (data.status === 'approved') {
+            resultDiv.textContent = '✅ Релиз отправлен';
+            resultDiv.style.backgroundColor = '#2e7d32';
+        } else if (data.status === 'rejected') {
+            resultDiv.textContent = '❌ Релиз отклонён';
+            resultDiv.style.backgroundColor = '#c62828';
+        } else {
+            resultDiv.textContent = '⚪ В модерации';
+            resultDiv.style.backgroundColor = '#666';
+        }
+        resultDiv.style.padding = '10px';
+        resultDiv.style.borderRadius = '8px';
+        resultDiv.style.marginTop = '10px';
+        resultDiv.style.textAlign = 'center';
+
+    } catch (error) {
+        console.error('Ошибка:', error);
+        resultDiv.textContent = 'Произошла ошибка. Попробуйте позже.';
+        resultDiv.style.backgroundColor = '#555';
+        resultDiv.style.color = '#ccc';
+        resultDiv.style.padding = '10px';
+        resultDiv.style.borderRadius = '8px';
+    }
+});
