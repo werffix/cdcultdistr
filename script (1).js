@@ -90,7 +90,7 @@ document.getElementById('distributionForm').addEventListener('submit', function(
 // Функция отправки данных в Google Таблицу через Apps Script
 function sendEmail(formData) {
     // ВАЖНО: ЗАМЕНИТЕ ЭТОТ URL НА СКОПИРОВАННЫЙ ИЗ ШАГА 2!
-    const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbw_2YB60_ms0q9HWLMtTF6qaZuB7tpE6U_Lco9EpvU1rxDK3-hqKrCGPHrWl_IPfg/exec';
+    const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbwyzf5lL5bbm9_axxDtstW5iG-ut8xXpozsHLjaoL_TW-2uBLzBd3NJGaGbSVcDFcY/exec';
 
     // Подготовим данные к отправке. FormData нужно преобразовать в объект.
     const plainFormData = {};
@@ -132,3 +132,4 @@ function resetForm() {
     // trackFields больше нет, строка удалена
     Object.keys(selectedValues).forEach(key => selectedValues[key] = '');
 }
+
