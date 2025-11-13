@@ -167,6 +167,25 @@
             background-color: #666;
         }
 
+        /* --- НОВЫЙ СТИЛЬ ДЛЯ КНОПКИ СТАТУСА --- */
+        .status-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .status-btn:hover {
+            background-color: #666;
+        }
+
         .transfer-fields {
             display: none;
             margin-top: 15px;
@@ -223,7 +242,7 @@
                 padding: 20px;
             }
             
-            .submit-btn, .support-btn {
+            .submit-btn, .support-btn, .status-btn {
                 padding: 12px;
                 font-size: 16px;
             }
@@ -399,6 +418,9 @@
         </form>
     </div>
 
+    <!-- --- НОВАЯ КНОПКА СТАТУС РЕЛИЗА --- -->
+    <button class="status-btn" onclick="window.location.href='https://ch.cdcult.ru'">Статус релиза</button>
+
     <!-- Кнопка поддержки -->
     <button class="support-btn" onclick="window.location.href='https://cdcult_records.t.me'">Поддержка</button>
 
@@ -495,7 +517,7 @@
         // Функция отправки данных в Google Таблицу через Apps Script
         function sendEmail(formData) {
             // ВАЖНО: ЗАМЕНИТЕ ЭТОТ URL НА СКОПИРОВАННЫЙ ИЗ ШАГА 2!
-            const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbw_2YB60_ms0q9HWLMtTF6qaZuB7tpE6U_Lco9EpvU1rxDK3-hqKrCGPHrWl_IPfg/exec';
+            const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxys4UPOAtqyKWbm-JXu0IAW9BMkGZtIHP5iZr6scDZdfU9KK5AQ3RkckEJmz-GKQA/exec';
 
             // Подготовим данные к отправке. FormData нужно преобразовать в объект.
             const plainFormData = {};
