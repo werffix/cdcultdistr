@@ -132,4 +132,66 @@ function resetForm() {
     // trackFields больше нет, строка удалена
     Object.keys(selectedValues).forEach(key => selectedValues[key] = '');
 }
+/* Меню */
+.menu-container {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-toggle {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+}
+
+.bar {
+    height: 3px;
+    width: 100%;
+    background-color: #fff;
+    transition: 0.3s;
+    border-radius: 1px;
+}
+
+.menu-toggle:hover .bar {
+    background-color: #4a90e2;
+}
+
+/* Выпадающее меню */
+.menu-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    background-color: #222;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.menu-dropdown a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.menu-dropdown a:hover {
+    background-color: #333;
+}
+
+/* Показываем/скрываем меню */
+.menu-container.show .menu-dropdown {
+    display: block;
+}
 
