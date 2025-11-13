@@ -417,6 +417,25 @@
     <!-- Кнопка поддержки -->
     <button class="support-btn" onclick="window.location.href='https://cdcult_records.t.me'">Поддержка</button>
 
+    // Функция для переключения выпадающего меню
+const menuToggle = document.querySelector('.menu-toggle');
+const menuDropdown = document.querySelector('.menu-dropdown');
+const menuContainer = document.querySelector('.menu-container');
+
+if (menuToggle && menuDropdown && menuContainer) {
+    menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation(); // Останавливаем всплытие события, чтобы не сработать на document.click
+        menuContainer.classList.toggle('show'); // Переключаем класс 'show'
+    });
+
+    // Закрываем меню при клике вне его
+    document.addEventListener('click', function(e) {
+        if (!menuContainer.contains(e.target)) { // Проверяем, был ли клик вне меню
+            menuContainer.classList.remove('show'); // Убираем класс 'show'
+        }
+    });
+}
+
     <script>
         // Глобальный объект для хранения выбранных значений всех групп
         const selectedValues = {};
@@ -554,6 +573,7 @@
     </script>
 </body>
 </html>
+
 
 
 
