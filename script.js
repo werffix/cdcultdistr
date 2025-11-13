@@ -195,3 +195,22 @@ function resetForm() {
     display: block;
 }
 
+// Функция для переключения выпадающего меню
+const menuToggle = document.querySelector('.menu-toggle');
+const menuDropdown = document.querySelector('.menu-dropdown');
+const menuContainer = document.querySelector('.menu-container');
+
+if (menuToggle && menuDropdown && menuContainer) {
+    menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        menuContainer.classList.toggle('show');
+    });
+
+    // Закрываем меню при клике вне его
+    document.addEventListener('click', function(e) {
+        if (!menuContainer.contains(e.target)) {
+            menuContainer.classList.remove('show');
+        }
+    });
+}
+
